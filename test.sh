@@ -1,0 +1,1 @@
+curl -XPOST -H "Content-Type: application/json" --data '{"query": "{hello}"}' http://localhost:8080/graphql
