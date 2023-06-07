@@ -1,4 +1,4 @@
-module graphql
+module graphqlserver
 
 go 1.20
 
