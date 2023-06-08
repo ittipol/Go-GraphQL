@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "./rest_server"
+		},
+		{
+			"path": "./graphql_server"
+		}
+	],
+	"settings": {}
+}

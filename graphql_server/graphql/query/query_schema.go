@@ -8,7 +8,7 @@ import (
 
 func Schema() *graphql.Object {
 	fields := graphql.Fields{
-		"user": queryfields.User(),
+		"allItems": queryfields.AllItems(),
 	}
 
 	rootQuery := graphql.ObjectConfig{Name: "RootQuery", Fields: fields}
