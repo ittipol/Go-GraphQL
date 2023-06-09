@@ -1,11 +1,20 @@
 package queryfields
 
 import (
+	"encoding/json"
 	"errors"
+	"fmt"
 	"graphqlserver/httpclient"
 
 	"github.com/graphql-go/graphql"
 )
+
+type user struct {
+	Id            int
+	Title         string
+	Price         float32
+	OriginalPrice float32
+}
 
 func AllItems() *graphql.Field {
 
@@ -21,20 +30,33 @@ func AllItems() *graphql.Field {
 			"price": &graphql.Field{
 				Type: graphql.Float,
 			},
+			"originalPrice": &graphql.Field{
+				Type: graphql.Float,
+			},
 		},
 	})
 
 	return &graphql.Field{
-		Type: itemType,
+		Type: graphql.NewList(itemType),
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+
+			users := []user{}
 
 			resp, err := httpclient.HttpGet("http://localhost:5000/allItems")
 
 			if err != nil {
-				return "", errors.New("Failed to get items")
+				return nil, errors.New("Unexpected error")
 			}
 
-			return resp, nil
+			err = json.Unmarshal([]byte(resp), &users)
+
+			if err != nil {
+				return nil, errors.New("Unexpected error")
+			}
+
+			fmt.Printf("%v\n\n", users)
+
+			return users, nil
 		},
 	}
 }
