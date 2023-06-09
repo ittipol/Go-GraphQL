@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"graphqlserver/graphql/mutation"
-	"graphqlserver/graphql/query"
+
+	"graphqlserver/resolver/itemresolver"
+	"graphqlserver/schema"
 	"net/http"
 
 	"github.com/graphql-go/graphql"
@@ -12,29 +13,20 @@ import (
 
 func main() {
 
+	itemResolver := itemresolver.NewItemResolver()
+
+	querySchema := schema.NewQuerySchema(itemResolver)
+	mutationSchema := schema.NewMutationSchema(itemResolver)
+
 	schemaConfig := graphql.SchemaConfig{
-		Query:    query.Schema(),
-		Mutation: mutation.Schema(),
+		Query:    querySchema.Schema(),
+		Mutation: mutationSchema.Schema(),
 	}
 	schema, err := graphql.NewSchema(schemaConfig)
 
 	if err != nil {
 		panic(fmt.Sprintf("Failed to create new GraphQL schema, [%v]", err))
 	}
-
-	// query := `
-	// 	{hello}
-	// `
-
-	// params := graphql.Params{Schema: schema, RequestString: query}
-	// resp := graphql.Do(params)
-
-	// if len(resp.Errors) > 0 {
-	// 	panic(fmt.Sprintf("Failed to execute graphql operation, [%v]", resp.Errors))
-	// }
-
-	// fmt.Printf("%v \n\n", resp.Errors)
-	// fmt.Printf("%v \n\n", resp.Data)
 
 	h := handler.New(&handler.Config{
 		Schema:   &schema,

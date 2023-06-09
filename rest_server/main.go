@@ -52,6 +52,15 @@ func main() {
 
 	app.Get("/allItems", itemHandler.AllItems)
 
+	app.Post("/addItem", func(c *fiber.Ctx) error {
+
+		body := c.Body()
+
+		fmt.Printf("req body: %v", string(body))
+
+		return c.JSON("Item saved")
+	})
+
 	app.Get("/health", func(c *fiber.Ctx) error {
 		return c.JSON("OK")
 	})

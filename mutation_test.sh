@@ -1,7 +1,7 @@
 curl -XPOST -H "Content-Type: application/json" --data '{
-    "query": "mutation AddUser($name: String, $age: Int) {addUser(name: $name, age: $age)}",
+    "query": "mutation AddItem($title: String, $price: Float) {addItem(title: $title, price: $price)}",
     "variables": {
-        "name": "test",
-        "age": 33
+        "title": "New Item",
+        "price": 10000
     }
 }' http://localhost:8080/graphql
