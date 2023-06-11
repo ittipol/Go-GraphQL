@@ -4,8 +4,11 @@ import (
 	"fmt"
 	"log"
 	"restserver/database"
+	"restserver/handlers/categoryhandler"
 	"restserver/handlers/itemhandler"
+	"restserver/repositories/categoryrepository"
 	"restserver/repositories/itemrepository"
+	"restserver/services/categorysrv"
 	"restserver/services/itemsrv"
 	"strings"
 
@@ -34,21 +37,11 @@ func main() {
 	itemService := itemsrv.NewItemService(itemRepository)
 	itemHandler := itemhandler.NewItemHandler(itemService)
 
+	categoryRepository := categoryrepository.NewCategoryRepository(db)
+	categoryService := categorysrv.NewCategoryService(categoryRepository)
+	categoryhandler := categoryhandler.NewCategoryHandler(categoryService)
+
 	app := fiber.New()
-
-	// app.Get("/users", func(c *fiber.Ctx) error {
-
-	// 	return c.JSON("USER")
-	// })
-
-	// app.Post("/user", func(c *fiber.Ctx) error {
-
-	// 	body := c.Body()
-
-	// 	fmt.Printf("Body: %v", string(body))
-
-	// 	return c.JSON("User saved")
-	// })
 
 	app.Get("/allItems", itemHandler.AllItems)
 
@@ -60,6 +53,8 @@ func main() {
 
 		return c.JSON("Item saved")
 	})
+
+	app.Get("AllCategories", categoryhandler.AllCategories)
 
 	app.Get("/health", func(c *fiber.Ctx) error {
 		return c.JSON("OK")

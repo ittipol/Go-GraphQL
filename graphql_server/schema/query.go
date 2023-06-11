@@ -1,6 +1,7 @@
 package schema
 
 import (
+	"graphqlserver/resolver/categoryresolver"
 	"graphqlserver/resolver/itemresolver"
 
 	"github.com/graphql-go/graphql"
@@ -11,16 +12,25 @@ type QuerySchema interface {
 }
 
 type querySchema struct {
-	itemResolver itemresolver.ItemResolver
+	itemResolver     itemresolver.ItemResolver
+	categoryResolver categoryresolver.CategoryResolver
 }
 
-func NewQuerySchema(itemResolver itemresolver.ItemResolver) QuerySchema {
-	return &querySchema{itemResolver}
+func NewQuerySchema(
+	itemResolver itemresolver.ItemResolver,
+	categoryResolver categoryresolver.CategoryResolver,
+) QuerySchema {
+	return &querySchema{
+		itemResolver:     itemResolver,
+		categoryResolver: categoryResolver,
+	}
 }
 
 func (obj querySchema) Schema() *graphql.Object {
 	fields := graphql.Fields{
-		"allItems": obj.itemResolver.AllItems(),
+		"allItems":      obj.itemResolver.AllItems(),
+		"getItemBySlug": obj.itemResolver.GetItemBySlug(),
+		"allCategories": obj.categoryResolver.AllCategories(),
 	}
 
 	rootQuery := graphql.ObjectConfig{Name: "RootQuery", Fields: fields}

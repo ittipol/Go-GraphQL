@@ -1,1 +1,1 @@
-curl -XPOST -H "Content-Type: application/json" --data '{"query": "{allItems{id,title}}"}' http://localhost:8080/graphql
+curl -XPOST -H "Content-Type: application/json" --data '{"query": "{allItems{id,title} allCategories{id,name,slug}}"}' http://localhost:8080/graphql

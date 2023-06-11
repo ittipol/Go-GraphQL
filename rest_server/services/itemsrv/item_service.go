@@ -11,13 +11,13 @@ func NewItemService(itemRepository itemrepository.ItemRepository) ItemService {
 }
 
 func (obj itemService) AllItems() (items []Item, err error) {
-	itemResult, err := obj.itemRepository.AllItems()
+	itemData, err := obj.itemRepository.AllItems()
 
 	if err != nil {
 		return
 	}
 
-	for _, item := range itemResult {
+	for _, item := range itemData {
 
 		temp := Item{
 			ID:            item.ID,

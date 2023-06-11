@@ -10,7 +10,7 @@ func NewItemRepository(db *gorm.DB) ItemRepository {
 	return &itemRepository{db}
 }
 
-func (obj itemRepository) AllItems() (items []Item, err error) {
+func (obj itemRepository) AllItems() (items []item, err error) {
 
 	tx := obj.db.Limit(10).Order("updated_at DESC").Find(&items)
 

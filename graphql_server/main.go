@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"graphqlserver/resolver/categoryresolver"
 	"graphqlserver/resolver/itemresolver"
 	"graphqlserver/schema"
 	"net/http"
@@ -13,9 +14,13 @@ import (
 
 func main() {
 
+	// Resolver
 	itemResolver := itemresolver.NewItemResolver()
+	categoryResolver := categoryresolver.NewCategoryResolver()
 
-	querySchema := schema.NewQuerySchema(itemResolver)
+	// Query
+	querySchema := schema.NewQuerySchema(itemResolver, categoryResolver)
+	// Mutation
 	mutationSchema := schema.NewMutationSchema(itemResolver)
 
 	schemaConfig := graphql.SchemaConfig{

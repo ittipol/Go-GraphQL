@@ -2,7 +2,7 @@ package itemrepository
 
 // https://gorm.io/docs/models.html
 // VAR_NAME string `gorm:"primarykey;size:16"`
-type Item struct {
+type item struct {
 	ID            int
 	Title         string `gorm:"size:255"`
 	Price         float32
@@ -10,5 +10,5 @@ type Item struct {
 }
 
 type ItemRepository interface {
-	AllItems() (items []Item, err error)
+	AllItems() (items []item, err error)
 }
