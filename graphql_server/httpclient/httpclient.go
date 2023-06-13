@@ -36,7 +36,7 @@ func testHttpPost() (string, error) {
 
 func HttpGet(url string) (string, error) {
 	resp, err := http.Get(url)
-
+	// resp.StatusCode
 	if err != nil {
 		return "", err
 	}

@@ -25,3 +25,17 @@ func (obj itemHandler) AllItems(c *fiber.Ctx) error {
 	c.Status(fiber.StatusOK)
 	return c.JSON(items)
 }
+
+func (obj itemHandler) GetItemBySlug(c *fiber.Ctx) error {
+
+	slug := c.Params("slug")
+
+	item, err := obj.itemService.GetItemBySlug(slug)
+
+	if err != nil {
+		return fiber.ErrInternalServerError
+	}
+
+	c.Status(fiber.StatusOK)
+	return c.JSON(item)
+}

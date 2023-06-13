@@ -1,6 +1,10 @@
 package itemrepository
 
-import "gorm.io/gorm"
+import (
+	"database/sql"
+
+	"gorm.io/gorm"
+)
 
 type itemRepository struct {
 	db *gorm.DB
@@ -19,4 +23,15 @@ func (obj itemRepository) AllItems() (items []item, err error) {
 	}
 
 	return items, err
+}
+
+func (obj itemRepository) GetItemBySlug(slug string) (item item, err error) {
+
+	tx := obj.db.Where("slug = @slug", sql.Named("slug", slug)).Find(&item)
+
+	if tx.Error != nil {
+		return item, tx.Error
+	}
+
+	return
 }

@@ -5,10 +5,12 @@ package itemrepository
 type item struct {
 	ID            int
 	Title         string `gorm:"size:255"`
+	Slug          string `gorm:"size:255"`
 	Price         float32
 	OriginalPrice float32 `gorm:"column:original_price"`
 }
 
 type ItemRepository interface {
 	AllItems() (items []item, err error)
+	GetItemBySlug(slug string) (item item, err error)
 }

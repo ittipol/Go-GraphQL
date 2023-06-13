@@ -19,8 +19,26 @@ func NewItemResolver( /*repository*/ ) ItemResolver {
 
 func (obj itemResolver) AllItems() *graphql.Field {
 
+	itemType := graphql.NewObject(graphql.ObjectConfig{
+		Name: "AllItems",
+		Fields: graphql.Fields{
+			"id": &graphql.Field{
+				Type: graphql.Int,
+			},
+			"title": &graphql.Field{
+				Type: graphql.String,
+			},
+			"price": &graphql.Field{
+				Type: graphql.Float,
+			},
+			"originalPrice": &graphql.Field{
+				Type: graphql.Float,
+			},
+		},
+	})
+
 	return &graphql.Field{
-		Type: graphql.NewList(itemType()),
+		Type: graphql.NewList(itemType),
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 
 			items := []item{}
@@ -47,8 +65,26 @@ func (obj itemResolver) AllItems() *graphql.Field {
 
 func (obj itemResolver) GetItemBySlug() *graphql.Field {
 
+	itemType := graphql.NewObject(graphql.ObjectConfig{
+		Name: "GetItemBySlug",
+		Fields: graphql.Fields{
+			"id": &graphql.Field{
+				Type: graphql.Int,
+			},
+			"title": &graphql.Field{
+				Type: graphql.String,
+			},
+			"price": &graphql.Field{
+				Type: graphql.Float,
+			},
+			"originalPrice": &graphql.Field{
+				Type: graphql.Float,
+			},
+		},
+	})
+
 	return &graphql.Field{
-		Type: itemType(),
+		Type: itemType,
 		Args: graphql.FieldConfigArgument{
 			"slug": &graphql.ArgumentConfig{
 				Type: graphql.String,

@@ -21,23 +21,3 @@ type ItemResolver interface {
 	GetItemBySlug() *graphql.Field
 	AddItem() *graphql.Field
 }
-
-func itemType() *graphql.Object {
-	return graphql.NewObject(graphql.ObjectConfig{
-		Name: "Item",
-		Fields: graphql.Fields{
-			"id": &graphql.Field{
-				Type: graphql.Int,
-			},
-			"title": &graphql.Field{
-				Type: graphql.String,
-			},
-			"price": &graphql.Field{
-				Type: graphql.Float,
-			},
-			"originalPrice": &graphql.Field{
-				Type: graphql.Float,
-			},
-		},
-	})
-}

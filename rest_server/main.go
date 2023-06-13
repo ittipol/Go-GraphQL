@@ -54,6 +54,8 @@ func main() {
 		return c.JSON("Item saved")
 	})
 
+	app.Get("/getItemBySlug/:slug", itemHandler.GetItemBySlug)
+
 	app.Get("AllCategories", categoryhandler.AllCategories)
 
 	app.Get("/health", func(c *fiber.Ctx) error {
